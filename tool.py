@@ -12,7 +12,7 @@ from starlette.responses import HTMLResponse
 
 
 # ---------------------------------------------------------------------------
-# Theme detection script — runs in <head> before content renders so CSS
+# Theme detection script - runs in <head> before content renders so CSS
 # variables resolve to the correct theme immediately.
 # ---------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ _THEME_SCRIPT = """<script>
 
 
 # ---------------------------------------------------------------------------
-# Body scripts — height reporting, sendPrompt bridge, openLink, render
+# Body scripts - height reporting, sendPrompt bridge, openLink, render
 # ---------------------------------------------------------------------------
 
 _BODY_SCRIPTS = """<script>
@@ -120,21 +120,21 @@ def _build_openui_html(code: str, title: str = "Response", cdn_base: str = _CDN_
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src https://cdn.jsdelivr.net; img-src * data: blob:; font-src 'self' data: https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'">
 <link rel="stylesheet" href="{cdn_base}/openui-styles.css">
 <style>
-* {{{{ box-sizing: border-box; margin: 0; }}}}
-html, body {{{{ background: transparent; }}}}
-body {{{{ padding: 4px; overflow: visible; }}}}
-#openui-root {{{{ width: 100%; }}}}
-.openui-loading {{{{
+* {{ box-sizing: border-box; margin: 0; }}
+html, body {{ background: transparent; }}
+body {{ padding: 4px; overflow: visible; }}
+#openui-root {{ width: 100%; }}
+.openui-loading {{
   display: flex; align-items: center; justify-content: center;
   padding: 32px; color: #888; font-family: system-ui, -apple-system, sans-serif;
   font-size: 14px;
-}}}}
-.openui-error {{{{
+}}
+.openui-error {{
   padding: 16px; color: #dc2626; font-family: system-ui, sans-serif;
   background: #fef2f2; border-radius: 8px; border: 1px solid #fecaca;
   font-size: 13px; line-height: 1.5;
-}}}}
-.openui-error strong {{{{ display: block; margin-bottom: 4px; }}}}
+}}
+.openui-error strong {{ display: block; margin-bottom: 4px; }}
 </style>
 {_THEME_SCRIPT}
 </head>
@@ -142,15 +142,15 @@ body {{{{ padding: 4px; overflow: visible; }}}}
 <div id="openui-root"><div class="openui-loading">Loading components&#8230;</div></div>
 {_BODY_SCRIPTS}
 <script>
-(function() {{{{
+(function() {{
   var script = document.createElement('script');
   script.src = '{cdn_base}/openui-bundle.min.js';
-  script.onload = function() {{{{
-    try {{{{
+  script.onload = function() {{
+    try {{
       var OpenUI = window.__OpenUI;
-      if (!OpenUI || !OpenUI.Renderer || !OpenUI.openuiChatLibrary) {{{{
+      if (!OpenUI || !OpenUI.Renderer || !OpenUI.openuiChatLibrary) {{
         throw new Error('OpenUI bundle loaded but exports missing');
-      }}}}
+      }}
 
       var code = {code_json};
       var container = document.getElementById('openui-root');
@@ -158,57 +158,57 @@ body {{{{ padding: 4px; overflow: visible; }}}}
 
       var root = OpenUI.createRoot(container);
 
-      function handleAction(event) {{{{
-        if (event.type === 'open_url') {{{{
+      function handleAction(event) {{
+        if (event.type === 'open_url') {{
           openLink(event.params && event.params.url ? event.params.url : '');
           return;
-        }}}}
+        }}
 
         var prompt = event.humanFriendlyMessage || (event.params && event.params.message) || '';
 
-        if (event.formState && Object.keys(event.formState).length > 0) {{{{
+        if (event.formState && Object.keys(event.formState).length > 0) {{
           var formDataStr = Object.entries(event.formState)
-            .map(function(entry) {{{{ return entry[0] + ': ' + JSON.stringify(entry[1]); }}}})
+            .map(function(entry) {{ return entry[0] + ': ' + JSON.stringify(entry[1]); }})
             .join('\\n');
           prompt = prompt
             ? prompt + '\\n\\nForm data:\\n' + formDataStr
             : 'Form submission' + (event.formName ? ' (' + event.formName + ')' : '') + ':\\n' + formDataStr;
-        }}}}
+        }}
 
-        if (!prompt && event.type) {{{{
+        if (!prompt && event.type) {{
           prompt = 'User action: ' + event.type + (event.params ? '\\n' + JSON.stringify(event.params) : '');
-        }}}}
+        }}
 
-        if (prompt) {{{{
+        if (prompt) {{
           sendPrompt(prompt);
-        }}}}
-      }}}}
+        }}
+      }}
 
-      root.render(OpenUI.React.createElement(OpenUI.Renderer, {{{{
+      root.render(OpenUI.React.createElement(OpenUI.Renderer, {{
         response: code,
         library: OpenUI.openuiChatLibrary,
         isStreaming: false,
         onAction: handleAction
-      }}}}));
+      }}));
 
       setTimeout(reportHeight, 500);
       setTimeout(reportHeight, 2000);
-    }}}} catch(err) {{{{
+    }} catch(err) {{
       var el = document.getElementById('openui-root');
       el.innerHTML = '<div class="openui-error"><strong>Failed to render OpenUI</strong>'
         + (err.message || String(err)).replace(/</g, '&lt;') + '</div>';
       console.error('OpenUI render error:', err);
       reportHeight();
-    }}}}
-  }}}};
-  script.onerror = function() {{{{
+    }}
+  }};
+  script.onerror = function() {{
     var el = document.getElementById('openui-root');
     el.innerHTML = '<div class="openui-error"><strong>Failed to load OpenUI bundle</strong>'
       + 'Could not load ' + script.src + '. Make sure openui-bundle.min.js is in the static directory.</div>';
     reportHeight();
-  }}}};
+  }};
   document.body.appendChild(script);
-}}}})();
+}})();
 </script>
 </body>
 </html>"""
@@ -219,7 +219,7 @@ body {{{{ padding: 4px; overflow: visible; }}}}
 # ---------------------------------------------------------------------------
 
 class Tools:
-    """OpenUI Generative UI — renders interactive components in chat.
+    """OpenUI Generative UI - renders interactive components in chat.
 
     When the user's question could benefit from a visual response (charts,
     tables, forms, cards, step lists, follow-ups, etc.), call render_openui
@@ -250,7 +250,7 @@ class Tools:
 
         IMPORTANT: Pass the openui-lang code as the openui_lang_code argument.
         NEVER output openui-lang as text in your response. After calling this tool,
-        briefly describe what the user sees — do NOT echo the source code.
+        briefly describe what the user sees - do NOT echo the source code.
 
         ## OpenUI Lang Syntax
 
@@ -261,11 +261,11 @@ class Tools:
 
         ## Components
 
-        Card(children[]) — root container, children stack vertically.
+        Card(children[]) - root container, children stack vertically.
         CardHeader(title?, subtitle?)
-        TextContent(text, size?) — size: "small"|"default"|"large"|"small-heavy"|"large-heavy"
-        MarkDownRenderer(textMarkdown, variant?) — variant: "clear"|"card"|"sunk"
-        Callout(variant, title, description) — variant: "info"|"warning"|"error"|"success"|"neutral"
+        TextContent(text, size?) - size: "small"|"default"|"large"|"small-heavy"|"large-heavy"
+        MarkDownRenderer(textMarkdown, variant?) - variant: "clear"|"card"|"sunk"
+        Callout(variant, title, description) - variant: "info"|"warning"|"error"|"success"|"neutral"
         TextCallout(variant?, title?, description?)
         Image(alt, src?)
         ImageBlock(src, alt?)
@@ -274,16 +274,16 @@ class Tools:
         Separator(orientation?, decorative?)
 
         Table(columns: Col[])
-        Col(label, data[], type?) — type: "string"|"number"|"action"
+        Col(label, data[], type?) - type: "string"|"number"|"action"
 
-        BarChart(labels[], series: Series[], variant?, xLabel?, yLabel?) — variant: "grouped"|"stacked"
-        LineChart(labels[], series: Series[], variant?, xLabel?, yLabel?) — variant: "linear"|"natural"|"step"
+        BarChart(labels[], series: Series[], variant?, xLabel?, yLabel?) - variant: "grouped"|"stacked"
+        LineChart(labels[], series: Series[], variant?, xLabel?, yLabel?) - variant: "linear"|"natural"|"step"
         AreaChart(labels[], series: Series[], variant?, xLabel?, yLabel?)
         HorizontalBarChart(labels[], series: Series[], variant?, xLabel?, yLabel?)
         RadarChart(labels[], series: Series[])
         Series(category, values[])
 
-        PieChart(labels[], values[], variant?) — variant: "pie"|"donut"
+        PieChart(labels[], values[], variant?) - variant: "pie"|"donut"
         RadialChart(labels[], values[])
         SingleStackedBarChart(labels[], values[])
 
@@ -306,13 +306,13 @@ class Tools:
         SwitchGroup(name, items: SwitchItem[], variant?, value?)
         SwitchItem(label?, description?, name, defaultChecked?)
 
-        Button(label, action?, variant?, type?, size?) — variant: "primary"|"secondary"|"tertiary"
-        Buttons(buttons[], direction?) — direction: "row"|"column"
+        Button(label, action?, variant?, type?, size?) - variant: "primary"|"secondary"|"tertiary"
+        Buttons(buttons[], direction?) - direction: "row"|"column"
 
-        ListBlock(items: ListItem[], variant?) — variant: "number"|"image"
+        ListBlock(items: ListItem[], variant?) - variant: "number"|"image"
         ListItem(title, subtitle?, image?, actionLabel?, action?)
-        FollowUpBlock(items: FollowUpItem[]) — clickable follow-ups at end
-        FollowUpItem(text) — clicking sends text as user message
+        FollowUpBlock(items: FollowUpItem[]) - clickable follow-ups at end
+        FollowUpItem(text) - clicking sends text as user message
 
         SectionBlock(sections: SectionItem[], isFoldable?)
         SectionItem(value, trigger, content[])
@@ -323,12 +323,12 @@ class Tools:
         AccordionItem(value, trigger, content[])
         Steps(items: StepsItem[])
         StepsItem(title, details)
-        Carousel(children[][], variant?) — each slide is array of components; all slides same structure
+        Carousel(children[][], variant?) - each slide is array of components; all slides same structure
 
         TagBlock(tags[])
         Tag(text, icon?, size?, variant?)
 
-        Action([@steps...]) — wires buttons. Steps: @ToAssistant("msg"), @OpenUrl("url")
+        Action([@steps...]) - wires buttons. Steps: @ToAssistant("msg"), @OpenUrl("url")
         Buttons without Action auto-send their label.
 
         ## Examples
