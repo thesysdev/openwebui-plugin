@@ -4,7 +4,7 @@ An [Open WebUI](https://github.com/open-webui/open-webui) tool that renders inte
 
 ## Demo
 
-https://github.com/thesysdev/openwebui-plugin/raw/main/assets/demo.mov
+<video src="https://github.com/thesysdev/openwebui-plugin/raw/main/assets/demo.mp4" controls width="100%"></video>
 
 ## How it works
 
@@ -17,7 +17,7 @@ https://github.com/thesysdev/openwebui-plugin/raw/main/assets/demo.mov
 
 ### Option A: From openwebui.com (recommended)
 
-Visit the tool page on [openwebui.com/tools](https://openwebui.com/tools) and import directly.
+Visit the tool page on [openwebui.com/tools](https://openwebui.com/posts/generative_ui_plugin_for_open_webui_6c017d62) and import directly.
 
 ### Option B: Manual
 
