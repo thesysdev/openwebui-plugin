@@ -2,6 +2,10 @@
 
 An [Open WebUI](https://github.com/open-webui/open-webui) tool that renders interactive generative UI components (charts, forms, tables, cards, follow-ups) in chat using [OpenUI](https://www.openui.com/) Lang.
 
+## Demo
+
+https://github.com/thesysdev/openwebui-plugin/raw/main/assets/demo.mov
+
 ## How it works
 
 1. The LLM calls `render_openui(openui_lang_code, title)` with OpenUI Lang code
