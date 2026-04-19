@@ -23,7 +23,7 @@ Visit the tool page on [openwebui.com/tools](https://openwebui.com/posts/generat
 
 1. Go to **Admin > Tools** in your Open WebUI instance
 2. Click **+** to create a new tool
-3. Paste the contents of [`openui_tool.py`](openui_tool.py)
+3. Paste the contents of [`tool.py`](tool.py)
 4. Save
 
 That's it. No other setup needed — the JS bundle and CSS are loaded from CDN automatically.
@@ -53,7 +53,7 @@ The tool supports 40+ components from the OpenUI chat library:
 ## Architecture
 
 ```
-openui_tool.py          Python tool (paste into Open WebUI Admin > Tools)
+tool.py                 Python tool (paste into Open WebUI Admin > Tools)
 bundle/
   openui-entry.js       esbuild entry point
   package.json          npm deps for rebuilding the bundle

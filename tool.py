@@ -1,6 +1,6 @@
 """
-title: OpenUI Generative UI
-author: vishxrad
+title: OpenUI - Generative UI
+author: thesysdev/vishxrad
 version: 0.4.0
 description: Renders interactive generative UI components (charts, forms, tables, cards, follow-ups) in chat using OpenUI Lang.
 """
