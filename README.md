@@ -4,7 +4,10 @@ An [Open WebUI](https://github.com/open-webui/open-webui) tool that renders inte
 
 ## Demo
 
-<video src="https://github.com/thesysdev/openwebui-plugin/raw/main/assets/demo.mp4" controls width="100%"></video>
+
+https://github.com/user-attachments/assets/65dde6d5-15c9-49cb-9813-24e425179517
+
+
 
 ## How it works
 
@@ -82,6 +85,3 @@ The tool has one Valve (configurable in Admin > Tools):
 - **No streaming**: Tools execute after the LLM finishes generating the tool call arguments. The UI renders all at once, not token-by-token. This is a fundamental limitation of the tool/plugin architecture.
 - **Bundle size**: The first load fetches ~650KB (gzipped) from CDN. Subsequent loads are cached by the browser.
 
-## License
-
-MIT
