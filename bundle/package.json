@@ -1,0 +1,17 @@
+{
+  "name": "openui-tool-bundle",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@openuidev/react-lang": "0.2.3",
+    "@openuidev/react-ui": "0.11.3",
+    "react": "19",
+    "react-dom": "19"
+  },
+  "devDependencies": {
+    "esbuild": "latest"
+  },
+  "scripts": {
+    "build": "esbuild openui-entry.js --bundle --format=iife --minify --outfile=openui-bundle.min.js --define:process.env.NODE_ENV=\"production\" --target=es2020 && cat node_modules/@openuidev/react-ui/dist/styles/openui-defaults.css node_modules/@openuidev/react-ui/dist/components/index.css > openui-styles.css"
+  }
+}

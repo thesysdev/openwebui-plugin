@@ -1,0 +1,3 @@
+node_modules/
+bundle/node_modules/
+*.tgz
