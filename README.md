@@ -62,11 +62,11 @@ bundle/
   package.json          npm deps for rebuilding the bundle
 ```
 
-The tool loads a pre-built browser bundle from CDN (`@vishxrad/openui-webui-bundle`) which contains React, the OpenUI parser/renderer, and the full component library (recharts, radix-ui, etc.) in a single IIFE file.
+The tool loads a pre-built browser bundle from CDN (`@openuidev/browser-bundle`) which contains React, the OpenUI parser/renderer, and the full component library (recharts, radix-ui, etc.) in a single IIFE file.
 
 ## Rebuilding the bundle
 
-If you need to rebuild (e.g., to use a newer OpenUI version):
+If you need to rebuild:
 
 ```bash
 cd bundle
@@ -78,7 +78,7 @@ npx esbuild openui-entry.js --bundle --format=iife --minify --outfile=openui-bun
 
 The tool has one Valve (configurable in Admin > Tools):
 
-- **cdn_base_url**: Base CDN URL for the OpenUI bundle. Defaults to `https://cdn.jsdelivr.net/npm/@vishxrad/openui-webui-bundle@0.1.0`. Change if self-hosting or using a different version.
+- **cdn_base_url**: Base CDN URL for the OpenUI bundle. Defaults to `https://cdn.jsdelivr.net/npm/@openuidev/browser-bundle@latest`. Change if self-hosting or using a different version.
 
 ## Limitations
 
